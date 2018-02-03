@@ -23,6 +23,48 @@ For the **second**, it is just necessary to directly open a new page to the defi
 
 The technical implementation seems to be rather straightforward. Certainly more straightforward than the *Local Weather App*. Therefore, more time and attention are paid to the design of the page itself.
 
-// TO DO: ADD DESIGN PROCESS
+## The design
 
-// TO DO: ADD TECHNICAL IMPLEMENTATION
+The starting decision behind the design portrayed in the mockup folder is to present the user directly with the main action behind the page: search for something on Wikipedia.
+
+Beside this first interaction, a choice is made to incorporate a call to a random Wikipedia entry only later in the page, as the page itself is briefly explained.
+
+Finally, as a nice sendoff to the page, a final section is dedicated to a whimsical, hopefully not too aggressive one-liner and a simple social media reference.
+
+Beside the structure here briefly introduced, the attention spent on the CSS has been more intensive than previous projects. 
+
+In trying to incorporate multiple nuances, to enhance both ease of use and flair, the following additions were made to the bare HTML document:
+
+- flexbox is used on all sections to easily center content, horizontally and most importantly vertically;
+
+- odd sections have a gradient as background, slightly fading from the main color to a lighter hue;
+
+- search input has a gradient border, enabled through the property of "border-image". Property I am still striving to completely understand;
+
+- input itself has an animation, to introduce a label whenever the input has focus. This label is positioned atop the input and set to appear as the placeholder of the input element disappears. I find it to be a small nice effect, hopefully not detrimental to the visitor's experience;
+
+- the search box containing input and icon has also a simple animation, to introduce the container gently from the side;
+
+- svg images are included inline and positioned in the document as a nice visual addition. The key is to maintain a degree of visibility whilst avoiding any overlap on the corpus of the page, represented by the actual text (achieved through appropriate width/height and z-index);
+
+- font sizes for the headers, as well as width and height for the svg images, incorporate a measure relative to the document's default options (rem), while also considering the size of the viewport (vw and vh). Both are weighed through the calc() function;
+
+- the svg used as the icon next to the input as well as the svg introduced inline in the middle section, they both have a simple transition applied on hover;  
+
+- the anchor link directly toward a random Wikipedia entry has a hover transition to create a border from the bottom center of the element (achieved through pseudo selectors and absolute positioning);
+
+- media queries are set as to maintain visibility of the elements on smaller screen sizes.
+
+The entirety of the CSS will be properly documented, including the nasty property of "border-image". Hopefully, the complexity introduced is understandable. 
+
+// TODO FINISH COMMENTING CSS
+
+
+## Technical implementation
+
+Besides the sections concocted in the design process, a fundamental component lays in the actual implementation of the Wikipedia API. It is indeed necessary to introduce new elements for the list of items that will be populated once a search string is passed through the input element and search results come pouring in.
+
+In order to understand the format of the list, it is necessary to previously understand how the API inherently works. And most importantly, what kind of data is returned once a call is made.
+
+
+// TO DO: ADD TECHNICAL IMPLEMENTATION 
