@@ -2,7 +2,7 @@
 
 ## The End Result 
 
-If you care only about results a live demo is currently being built on codepen at the following [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
+If you care only about results, a live demo is currently being built on codepen at the following [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
 
 If you bother with the thought process behind the single page application, what follows may be of some marginal value. 
 
