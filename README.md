@@ -1,4 +1,12 @@
-## The task
+# Wikipedia Viewer
+
+## The End Result 
+
+If you care only about results, a live demo is currently being built on codepen at the following [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
+
+If you bother with the thought process behind the single page application, what follows may be of some marginal value. 
+
+## The Task
 
 Build a single-purpose web application which allows visitors to look for Wikipedia entries.
 
@@ -7,7 +15,7 @@ The website should be able to specifically fulfill two user stories; it should b
 - search for Wikipedia articles containing a particular keyword;
 - search for a random Wikipedia entry, for kicks
 
-## First thoughts
+## First Thoughts
 
 FreeCodeCamp is generous enough to already provide useful references for the technical implementation of the project. 
 
@@ -23,7 +31,7 @@ For the **second**, it is just necessary to directly open a new page to the defi
 
 The technical implementation seems to be rather straightforward. Certainly more straightforward than the *Local Weather App*. Therefore, more time and attention are paid to the design of the page itself.
 
-## The design
+## The Design
 
 The starting decision behind the design portrayed in the mockup folder is to present the user directly with the main action behind the page: search for something on Wikipedia.
 
@@ -31,9 +39,11 @@ Beside this first interaction, a choice is made to incorporate a call to a rando
 
 Finally, as a nice sendoff to the page, a final section is dedicated to a whimsical, hopefully not too aggressive one-liner and a simple social media reference.
 
-Beside the structure here briefly introduced, the attention spent on the CSS has been more intensive than previous projects. 
+The structure briefly introduced is visually explained in the mockup folder of this repository, under the label of Mockup 1, 2 and 3. Building on this rudimentary visualization, the page has been developed loosely matching the presented appearance.
 
-In trying to incorporate multiple nuances, to enhance both ease of use and flair, the following additions were made to the bare HTML document:
+With a relevant amount of time and attention dedicated on the CSS itself. 
+
+Indeed in trying to incorporate multiple niceties, to enhance both ease of use and flair, the following additions were made to the bare HTML document:
 
 - flexbox is used on all sections to easily center content, horizontally and most importantly vertically;
 
@@ -60,7 +70,7 @@ The entirety of the CSS will be properly documented, including the nasty propert
 // TODO FINISH COMMENTING CSS
 
 
-## Technical implementation
+## Technical Implementation
 
 Besides the sections concocted in the design process, a fundamental component lays in the actual implementation of the Wikipedia API. It is indeed necessary to introduce new elements for the list of items that will be populated once a search string is passed through the input element and search results come pouring in.
 
