@@ -9,8 +9,8 @@ reset margin and padding for all elements
 }
 /*
 body
-    - spanning entire width of the screen
-    - hiding horizontal scroll
+  - spanning entire width of the screen
+  - hiding horizontal scroll
 */
 body {
   width: 100%;
@@ -18,8 +18,8 @@ body {
 }
 /*
 container (all of them)
-    - spanning entire width of the screen
-    - as high as the entire vertical viewport
+  - spanning entire width of the screen
+  - as high as the entire vertical viewport
 */
 .container {
   width: 100%;
@@ -28,9 +28,9 @@ container (all of them)
 
 /*
 search container
-    - with background gradient consisting of the chosen dark blue color palette
-    - display flex to inject flexbox
-    - align items and justify content to center the content in page, horizontally and vertically
+  - with background gradient consisting of the chosen dark blue color palette
+  - display flex to inject flexbox
+  - align items and justify content to center the content in page, horizontally and vertically
 */
 .search-container {
   background-image:
@@ -50,7 +50,10 @@ search box wrapper for input division and icon
     - transition to ease the change in padding between screen sizes
     - background color for a thin veil of white background
     - border set to 5px and solid
-    - border added a border-image to include a linear gradient around the wrapper
+    - border-image to include a linear gradient as a border, around the wrapper
+    - position relative to move the label freely around this container (label with position absolute)
+    - animation to use the animation defined by the @keyframes keyword, happening in 0.4s and retaining the properties it assumes when the animation is over (at 100%)
+
 */
 .search-box {
   display: flex;
@@ -65,20 +68,45 @@ search box wrapper for input division and icon
                                     #e0529c, #f05b45
                                     );
   border-image-slice: 1;
-
   /*
-  border-image explained
-  border-image-source: defining the image through url or the gradient through simple gradient declaration
-  border-image-slice: .......................... low values seem to change nothing, while higher values cut out the left and right border......
-    <<where to slice the image to create the pieces of the border>>
-    image divided in 9 sections: 4 corners, 4 sides, center
-    with any value > 280 unitless, it makes the adjacent two sides disappear...
-  border-image-width: same as border-width describing the width of the gradient/image (accepting up to 4 unitless/length values)
-  border-image-outset: how far to go beyond the contours of the page (accepting up to 4 unitless/length values)
+  *border-image: trying to explaining the not-so-clear property*
+  
+  1. how-to 
+  you can either use the shorthand property of **border-image**, in which you define multiple space separated values
+  OR
+  use separate properties one at a time
+  the only required property is actually the first one that will be here introduced
+  
+  2. useful properties
+  **border-image-source**: defining the image through URL or the gradient through gradient declaration. The image/gradient to use as border.
+  **border-image-slice**: this one is rather complicated
+  
+  <<where to slice the image to create the pieces of the border>>
+  the image passed in the url is divided in 9 sections: 4 corners, 4 sides, center
+  _|__|_
+  _|__|_
+  _|_|_
+  defining up to 4 unitless/percentage values, this properties decides how far to include the border-image/gradient with respect to the outside of the element
+  top, rightm bottom, left
+  
+    
+  
+  
+  **border-image-width**: same connotation as border-width, but describing the width of the image or gradient (accepting up to 4 unitless/length values; for top-right-bottom-left)
+  **border-image-outset**: describing how far to move the border-image from the element's own borders (accepting up to 4 unitless/length values, defaulted to 0)
+  
+  *useful resources*: [css tricks](https://css-tricks.com/almanac/properties/b/border-image/)
   */
   position: relative;
   animation: shake-appear 0.4s forwards;
 }
+
+/*
+keyframes to describe the animation applied to the search box container 
+  - from a smaller size, opacity 0 and a position slightly to the left (increasing right means pushing to the left)
+  - move to the right of where it will eventually be (creating a sort-of bounce)
+  - assume rightful size, opacity 1 and the position at which it would originally stand
+*/
 @keyframes shake-appear {
   0% {
     transform: scale(0.95);
@@ -106,6 +134,13 @@ input container (input and label)
   position: relative;
   align-self: center;
 }
+/*
+input element in the input container
+  - font-size set to consider the html document's own settings and the viewport width; the wider the viewport the greater the font
+  - border, outline and background to none (set by the container itself)
+  - color to the predefined color for simil-white
+  - font family to the imported font
+*/
 .input-container input {
   font-size: calc(2rem + 1vw);
   border: none;
@@ -114,17 +149,38 @@ input container (input and label)
   color: #aab3bc;
   font-family: 'Josefin Sans', sans-serif;
 }
+/*
+placeholder of the input element 
+  - color to the prdefined color for simil-white (might be benefitial to CHANGE to a more transparent hue)
+  - font family to the imported font
+  - transition to change the opacity in 0.2 seconds and in a linear fashion
+*/
 .input-container input::placeholder {
   color: #aab3bc;
   font-family: 'Josefin Sans', sans-serif;
   transition: opacity 0.2s linear;
 }
+/*
+placeholder of the input element, when the input is selected
+  - opacity to 0 (change influenced by the set property of transition)
+*/
 .input-container input:focus::placeholder {
   opacity: 0;
 }
-
+/*
+label element in the input container 
+  - position absolute to move the label freely in the container (which is set to position relative)
+  - font size to increase the otherwise very small text
+  - pushed above the container and aligned to the input text
+  - opacity originally to nil (set to be transitioned to 1 when the input is selected/has focus)
+  - color to the prdefined color for simil-white
+  - font family to the imported font 
+  - transition to occur in 0.2 seconds for the change in opacity AND top property (which moves the label upwards)
+  - transition delayed every so slightly to occur after the placeholder start disappearing
+*/
 .input-container label {
   position: absolute;
+  font-size: 1.2rem;
   top: -2rem;
   left: 0;
   opacity: 0;
@@ -132,13 +188,25 @@ input container (input and label)
   font-family: 'Josefin Sans', sans-serif;
   transition: all 0.2s linear;
   transition-delay: 0.1s;
-  font-size: 1.2rem;
+  
 }
+/*
+label element in the input container WHEN input is selected/has focus
+  - opacity to 1
+  - top to elevate the label
+*/
 .input-container input:focus + label {
   opacity: 1;
   top: -2.5rem;
 }
-
+/*
+svg for the search icon
+  - fill to the defined color for simil-white
+  - cursor to pointer to make it evidently click-able
+  - width and height to the size of a reasonable icon
+  - align-self to align the element vertically in its container
+  - transition for the hovering animation
+*/
 .search-box svg {
   fill: #aab3bc;
   cursor: pointer;
@@ -147,10 +215,25 @@ input container (input and label)
   align-self: center;
   transition: all 0.3s ease;
 }
+/*
+svg for the search icon, upon hover
+  - increase scale and rotate icon (small effect)
+*/
 .search-box svg:hover {
   transform: scale(1.2) rotateZ(-20deg);
 }
 
+
+
+
+
+/*
+when the screen size is lower than a predefined threshold (600px)
+  - change input element with a lower font size
+  - change input + label container with a smaller padding
+  - change svg position for the middle section setting the image below the text, avoiding possible overlaps
+  - change svg position for the last section pushing the image to the left, away from possible overlaps 
+*/
 
 @media only screen and (max-width: 600px) {
     .input-container input {
@@ -159,31 +242,47 @@ input container (input and label)
     .search-box {
       padding: 0.4rem;
     }
-    .departure-container #svg_astronaut {
-      left: 2rem;
-    }
     .purpose-container #svg_searching_documents {
       z-index: -1;
     }
-
-  }
-
-
-
-
+    .departure-container #svg_astronaut {
+      left: 2rem;
+    }
+}
 
 
+
+
+/*
+container for the middle section
+  - display flex to benefit from flexbox
+  - flex direction to change default of row to column
+  - justify content and align items to center items in the container
+  - text align to also align the text to center
+  - color to the dark blue used in the linear-gradient of the first section (to maintain a small color palette)
+  - font family to the imported font
+  - position set to relative to move the svg freely in this container 
+  - padding to move the content of the container away from the right and left border by a small amount
+*/
 .purpose-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   color: #1f364d;
   font-family: 'Josefin Sans', sans-serif;
-  text-align: center;
   position: relative;
   padding: 0 1rem;
 }
+/*
+svg image in the middle section, explaining the purpose behind the page
+  - position absolute to move it freely in the container (which is set to relative)
+  - height to make the svg clearly visible
+  - top and right to push the svg to the top right 
+  - transform to rotate the svg 
+  - transition to change the svg properties upon hover
+*/
 .purpose-container #svg_searching_documents {
   position: absolute;
   height: calc(2rem + 18vw);
@@ -191,28 +290,47 @@ input container (input and label)
   right: 2rem;
   transform: rotateZ(-20deg);
   transition: all 0.3s ease-out;
-
 }
+/*
+svg image upon hover
+  - increase scale and rotate a bit
+*/
 .purpose-container #svg_searching_documents:hover {
   transform: scale(1.1) rotateZ(-10deg);
 }
-
+/*
+header in the container of the middle section
+  - capitalize first letter
+  - include padding to distance it from the smaller headers below (MIGHT be unnecessary)
+  - font size considering default settings and viewport size 
+*/
 .purpose-container h1 {
    text-transform: capitalize;
    padding: 1rem 0;
    font-size: calc(3rem + 3vw);
 }
+/*
+smaller headers in the container of the middle section
+  - font size considering default settings and viewport size 
+*/
 .purpose-container h3 {
     font-size: calc(2rem + 2vw);
-    margin: 1rem 0;
 }
 
 
 
-
-
-
-
+/*
+container for the final section of the page, concluding the page
+- display flex to benefit from flexbox
+- flex direction changed to column
+- justify content, align items to place elements at the center of both axis of the container
+- text align to change alignment in the centered position
+- padding to squish away the items from the horizontal edges
+- color to the defined simil-white
+- font family to the imported font
+- position relative to move the svg image freely in this container 
+- background image replicating the linear gradient of the first section
+*/
 
 .departure-container {
   display: flex;
@@ -230,26 +348,60 @@ input container (input and label)
       #1c3248, #1f364d
     );
 }
+
+/*
+filler div used to move the container for the headers away from the top (they both grow to 1 and share the available space)
+  - flex grow to 1
+*/
 .departure-container .filler {
   flex-grow: 1;
 }
+/*
+container for the headers 
+  - flex grow to 1 (same of filler container)
+  - z index to place the container on top of the svg (this one set to a lower index)
+*/
 .departure-container .headers {
   flex-grow: 1;
   z-index: 2;
 }
+/*
+main header in the container for the headers
+  - capitalize first letter
+  - increase padding to distance it from the headers below and the border atop
+  - font size according to the html default's settings and the viewport width
+*/
 .departure-container .headers h1 {
   text-transform: capitalize;
   padding: 1rem 0;
   font-size: calc(3rem + 2.5vw);
 }
+/*
+second header in the container for the headers
+  - font size according to the html default's settings and the viewport width
+*/
 .departure-container .headers h2 {
   font-size: calc(2rem + 2vw);
 }
+/*
+paragraph for the final container
+  - increase font size (this item will occupy only as much space as needed; no flex-grow established)
+  - move item to the right of the column (it would be the bottom of the row if flex direction was set to be row)
+  - margin bottom to move the paragraph away from the very bottom of the page (padding of the container takes care of the right space between this item and the border)
+*/
 .departure-container p {
   font-size: 1.2rem;
   align-self: flex-end;
   margin-bottom: 1rem;
 }
+/*
+svg for the final container 
+  - position absolute to move the item freely in the container 
+  - set to bottom (and set to left for smaller screen sizes, see media queries)
+  - width depending on html default's settings and viewport size
+  - z index to 1, to place the item belowe the container for the headers
+  - transition to change position for smaller screen sizes
+*/
 .departure-container #svg_astronaut {
   position: absolute;
   bottom: 0;
@@ -257,26 +409,49 @@ input container (input and label)
   z-index: 1;
   transition: all 0.2s ease-out
 }
-
+/*
+links in the page (one found in the header of the middle section (for **random**) and one for the social reference in the final section)
+  - color to the dark blue set for the container, adopted through inheritance
+  - text decoration to remove default tyling
+  - italic style to change its appearance and make it stand out from the otherwise normal text
+*/
 .purpose-container h3 a, .departure-container p a {
   color: inherit;
   text-decoration: none;
   font-style: italic;
 }
-
+/*
+link in the header in the middle section
+  - position relative to move the pseudo selector :after freely around the anchor link
+*/
 .purpose-container h3 a {
   position: relative;
 }
+/*
+pseudo selector for the same link
+  - position absolute to move the pseudo selector freely around the anchor link
+  - content to empty string; required attribute, but set to the value of empty string to include background property
+  - bottom left to position the pseudo element to the center of the link, and just below the same element
+  - height defining the space occupied by the background
+  - background to the dark blue first introduced in the linear gradient (maintaining small color palette)
+  - width to 0, later transitioned to occupy the entire width of the element itself
+  - transition to characterize the change from width 0 to 100
+*/
 .purpose-container h3 a:after {
   position: absolute;
-  left: 50%;
   content: '';
+  bottom: 0;
+  left: 50%;
   height: 3px;
   background: #1f364d;
-  transition: all 0.2s ease-in-out;
   width: 0;
-  bottom: 0;
+  transition: all 0.2s ease-in-out;
 }
+/*
+pseudo selector for the same link UPON hover 
+  - width to 100%
+  - left to 0 to finally position the created border from left to right
+*/
 .purpose-container h3 a:hover:after {
   width: 100%;
   left: 0px;
