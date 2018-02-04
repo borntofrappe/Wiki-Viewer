@@ -66,13 +66,13 @@ search box wrapper for input division and icon
                                     to right,
                                     #e0529c, #f05b45
                                     );
-  border-image-slice: 10; /* 10 px */
-  border-image-width: auto; /* 10px */
+  border-image-slice: 7; /* 7px */
+  border-image-width: auto; /* 7px */
   /*
   **border-image: trying to explaining the not-so-clear property**
-  
-  First off, you need a border. Without this, the border-image is not visible. 
-  
+
+  First off, you need a border. Without this, the border-image is not visible.
+
   * border-style is of particular importance
   * border-width can be included, in which case the border-image is influenced by this size. But it is not required.
 
@@ -86,17 +86,17 @@ search box wrapper for input division and icon
 
   * border-image-outset: how far to extend the border-image, past the border of the element, accepting up to 4 values, length values (absolute in measure) or unitless values (multiplied by the border width)
 
-  **useful resources**: 
+  **useful resources**:
   * css tricks details on [border-image](https://css-tricks.com/almanac/properties/b/border-image/)
   * this [pen](https://codepen.io/borntofrappe/pen/aqNJdx)
-  
+
   */
   position: relative;
   animation: shake-appear 0.4s forwards;
 }
 
 /*
-keyframes to describe the animation applied to the search box container 
+keyframes to describe the animation applied to the search box container
   - from a smaller size, opacity 0 and a position slightly to the left (increasing right means pushing to the left)
   - move to the right of where it will eventually be (creating a sort-of bounce)
   - assume rightful size, opacity 1 and the position at which it would originally stand
@@ -144,7 +144,7 @@ input element in the input container
   font-family: 'Josefin Sans', sans-serif;
 }
 /*
-placeholder of the input element 
+placeholder of the input element
   - color to the prdefined color for simil-white (might be benefitial to CHANGE to a more transparent hue)
   - font family to the imported font
   - transition to change the opacity in 0.2 seconds and in a linear fashion
@@ -162,13 +162,13 @@ placeholder of the input element, when the input is selected
   opacity: 0;
 }
 /*
-label element in the input container 
+label element in the input container
   - position absolute to move the label freely in the container (which is set to position relative)
   - font size to increase the otherwise very small text
   - pushed above the container and aligned to the input text
   - opacity originally to nil (set to be transitioned to 1 when the input is selected/has focus)
   - color to the prdefined color for simil-white
-  - font family to the imported font 
+  - font family to the imported font
   - transition to occur in 0.2 seconds for the change in opacity AND top property (which moves the label upwards)
   - transition delayed every so slightly to occur after the placeholder start disappearing
 */
@@ -182,7 +182,7 @@ label element in the input container
   font-family: 'Josefin Sans', sans-serif;
   transition: all 0.2s linear;
   transition-delay: 0.1s;
-  
+
 }
 /*
 label element in the input container WHEN input is selected/has focus
@@ -222,32 +222,6 @@ svg for the search icon, upon hover
 
 
 /*
-when the screen size is lower than a predefined threshold (600px)
-  - change input element with a lower font size
-  - change input + label container with a smaller padding
-  - change svg position for the middle section setting the image below the text, avoiding possible overlaps
-  - change svg position for the last section pushing the image to the left, away from possible overlaps 
-*/
-
-@media only screen and (max-width: 600px) {
-    .input-container input {
-      font-size: calc(1.2rem + 0.5vw);
-    }
-    .search-box {
-      padding: 0.4rem;
-    }
-    .purpose-container #svg_searching_documents {
-      z-index: -1;
-    }
-    .departure-container #svg_astronaut {
-      left: 2rem;
-    }
-}
-
-
-
-
-/*
 container for the middle section
   - display flex to benefit from flexbox
   - flex direction to change default of row to column
@@ -255,7 +229,7 @@ container for the middle section
   - text align to also align the text to center
   - color to the dark blue used in the linear-gradient of the first section (to maintain a small color palette)
   - font family to the imported font
-  - position set to relative to move the svg freely in this container 
+  - position set to relative to move the svg freely in this container
   - padding to move the content of the container away from the right and left border by a small amount
 */
 .purpose-container {
@@ -273,13 +247,13 @@ container for the middle section
 svg image in the middle section, explaining the purpose behind the page
   - position absolute to move it freely in the container (which is set to relative)
   - height to make the svg clearly visible
-  - top and right to push the svg to the top right 
-  - transform to rotate the svg 
+  - top and right to push the svg to the top right
+  - transform to rotate the svg
   - transition to change the svg properties upon hover
 */
 .purpose-container #svg_searching_documents {
   position: absolute;
-  height: calc(2rem + 18vw);
+  height: calc(200px + 1vw);
   top: 1rem;
   right: 2rem;
   transform: rotateZ(-20deg);
@@ -296,19 +270,21 @@ svg image upon hover
 header in the container of the middle section
   - capitalize first letter
   - include padding to distance it from the smaller headers below (MIGHT be unnecessary)
-  - font size considering default settings and viewport size 
+  - font size considering default settings and viewport size
 */
 .purpose-container h1 {
    text-transform: capitalize;
    padding: 1rem 0;
-   font-size: calc(3rem + 3vw);
+   font-size: calc(7rem + 1vw);
 }
 /*
 smaller headers in the container of the middle section
-  - font size considering default settings and viewport size 
+  - font size considering default settings and viewport size
+  - margin bottom to separate the two headers from each other
 */
 .purpose-container h3 {
-    font-size: calc(2rem + 2vw);
+    font-size: calc(2rem + 0.5vw);
+    margin-bottom: 1rem;
 }
 
 
@@ -322,7 +298,7 @@ container for the final section of the page, concluding the page
 - padding to squish away the items from the horizontal edges
 - color to the defined simil-white
 - font family to the imported font
-- position relative to move the svg image freely in this container 
+- position relative to move the svg image freely in this container
 - background image replicating the linear gradient of the first section
 */
 
@@ -351,7 +327,7 @@ filler div used to move the container for the headers away from the top (they bo
   flex-grow: 1;
 }
 /*
-container for the headers 
+container for the headers
   - flex grow to 1 (same of filler container)
   - z index to place the container on top of the svg (this one set to a lower index)
 */
@@ -368,14 +344,14 @@ main header in the container for the headers
 .departure-container .headers h1 {
   text-transform: capitalize;
   padding: 1rem 0;
-  font-size: calc(3rem + 2.5vw);
+  font-size: calc(5rem + 1vw);
 }
 /*
 second header in the container for the headers
   - font size according to the html default's settings and the viewport width
 */
 .departure-container .headers h2 {
-  font-size: calc(2rem + 2vw);
+  font-size: calc(2rem + 1vw);
 }
 /*
 paragraph for the final container
@@ -389,8 +365,8 @@ paragraph for the final container
   margin-bottom: 1rem;
 }
 /*
-svg for the final container 
-  - position absolute to move the item freely in the container 
+svg for the final container
+  - position absolute to move the item freely in the container
   - set to bottom (and set to left for smaller screen sizes, see media queries)
   - width depending on html default's settings and viewport size
   - z index to 1, to place the item belowe the container for the headers
@@ -399,7 +375,7 @@ svg for the final container
 .departure-container #svg_astronaut {
   position: absolute;
   bottom: 0;
-  width: calc(2rem + 15vw);
+  width: calc(10rem + 1vw);
   z-index: 1;
   transition: all 0.2s ease-out
 }
@@ -442,11 +418,54 @@ pseudo selector for the same link
   transition: all 0.2s ease-in-out;
 }
 /*
-pseudo selector for the same link UPON hover 
+pseudo selector for the same link UPON hover
   - width to 100%
   - left to 0 to finally position the created border from left to right
 */
 .purpose-container h3 a:hover:after {
   width: 100%;
   left: 0px;
+}
+
+
+
+
+/*
+when the screen size is lower than a predefined threshold (600px)
+  - change input + label container with a smaller padding and a thinner border-image
+  - change input element with a lower font size
+  - change svg position for the middle section setting the image below the text, avoiding possible overlaps, and lower its size
+  - lower size of headers in the middle section
+  - lower size of headers in the final section
+  - change svg position for the last section pushing the image to the left, away from possible overlaps, and lower its size
+*/
+
+@media only screen and (max-width: 600px) {
+    .search-box {
+      padding: 0.4rem;
+      border-image-slice: 4;
+    }
+    .input-container input {
+      font-size: calc(1.4rem);
+    }
+    .purpose-container #svg_searching_documents {
+      height: calc(100px);
+      z-index: -1;
+    }
+    .purpose-container h1 {
+       font-size: calc(4rem);
+    }
+    .purpose-container h3 {
+        font-size: calc(2rem);
+    }
+    .departure-container .headers h1 {
+      font-size: calc(3rem);
+    }
+    .departure-container .headers h2 {
+      font-size: calc(2rem);
+    }
+    .departure-container #svg_astronaut {
+      left: 1rem;
+      width: calc(7rem);
+    }
 }
