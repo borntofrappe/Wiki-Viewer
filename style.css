@@ -60,42 +60,36 @@ search box wrapper for input division and icon
   padding: 1rem 2rem;
   transition: padding 0.2s ease-out;
   background-color: rgba(255,255,255,0.15);
-  border-width: 5px;
   border-style: solid;
   border-image-source:
         linear-gradient(
                                     to right,
                                     #e0529c, #f05b45
                                     );
-  border-image-slice: 1;
+  border-image-slice: 10; /* 10 px */
+  border-image-width: auto; /* 10px */
   /*
-  *border-image: trying to explaining the not-so-clear property*
+  **border-image: trying to explaining the not-so-clear property**
   
-  1. how-to 
-  you can either use the shorthand property of **border-image**, in which you define multiple space separated values
-  OR
-  use separate properties one at a time
-  the only required property is actually the first one that will be here introduced
+  First off, you need a border. Without this, the border-image is not visible. 
   
-  2. useful properties
-  **border-image-source**: defining the image through URL or the gradient through gradient declaration. The image/gradient to use as border.
-  **border-image-slice**: this one is rather complicated
+  * border-style is of particular importance
+  * border-width can be included, in which case the border-image is influenced by this size. But it is not required.
+
+  For the properties themselves the following non-comprehensive list might help:
+
+  * border-image-source: url of the image/ linear gradient to impose as a border
+
+  * border-image-slice: where to slice the element area as to introduce the border-image, accepting up to 4 values (top, right, bottom, left), accepting unitless numbers (pixels on raster images, coordinates on svg), percentages (relative to the size of the image), the fill keyword (in which case the border-image is used as background for the element)
+
+  * border-image-width: width of the border-image, accepting up to 4 values, accepting unitless values (multiplied by border width, 1 by default) or percentage values (relative to the border-image area) or auto (size set by image-slice or border-width if this is not available)
+
+  * border-image-outset: how far to extend the border-image, past the border of the element, accepting up to 4 values, length values (absolute in measure) or unitless values (multiplied by the border width)
+
+  **useful resources**: 
+  * css tricks details on [border-image](https://css-tricks.com/almanac/properties/b/border-image/)
+  * this [pen](https://codepen.io/borntofrappe/pen/aqNJdx)
   
-  <<where to slice the image to create the pieces of the border>>
-  the image passed in the url is divided in 9 sections: 4 corners, 4 sides, center
-  _|__|_
-  _|__|_
-  _|_|_
-  defining up to 4 unitless/percentage values, this properties decides how far to include the border-image/gradient with respect to the outside of the element
-  top, rightm bottom, left
-  
-    
-  
-  
-  **border-image-width**: same connotation as border-width, but describing the width of the image or gradient (accepting up to 4 unitless/length values; for top-right-bottom-left)
-  **border-image-outset**: describing how far to move the border-image from the element's own borders (accepting up to 4 unitless/length values, defaulted to 0)
-  
-  *useful resources*: [css tricks](https://css-tricks.com/almanac/properties/b/border-image/)
   */
   position: relative;
   animation: shake-appear 0.4s forwards;
