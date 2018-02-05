@@ -76,5 +76,252 @@ Besides the sections concocted in the design process, a fundamental component la
 
 In order to understand the format of the list, it is necessary to previously understand how the API inherently works. And most importantly, what kind of data is returned once a call is made.
 
+### Research
 
-// TO DO: ADD TECHNICAL IMPLEMENTATION 
+The Wikipedia API works by setting multiple values in an objective URL.
+
+The URL itself is comprised of multiple parts:
+
+1. the **endpoint**; the basis for the URL in the English API; this is the instance from which all API requests are enacted.
+
+  ```
+  https://en.wikipedia.org/w/api.php
+  ```
+
+2. **format**; the format in which data is to be retrieved.
+
+  By default this is set to JSON, but you might benefit also from a JSONFM format, in order to analyze the API's response more visually.
+
+  ```
+  format=json
+  ```
+
+3. **action**; the operation to be carried out through the API.
+
+  Most frequent actions are *search* and *query*. Wikipedia has also a [helpful dynamic guide](https://en.wikipedia.org/w/api.php) to pick the action according to one's necessities.
+
+  ```
+  action=query
+  ```
+
+4. **properties**; additional parameters to specify the details of the API request, such as the amount of data to be retrieved or the conditions that have to be met in order to retrieve specific data.
+
+  ```
+  limit=10
+  ```
+
+**_Important to note_**: as you build the URL for your custom needs:
+
+- separate format, actions and properties with an ampersand sign: `&`
+
+- include white spaces with the following sequence: `%20`
+
+### Practical Example
+
+For the instance of the Wikipedia Viewer web-application, the rightful action seems to be found in the helpful sub-menu on the right, labeled *MediaWiki APIs*.
+
+> Searching (by title, content, coordinates...)
+
+With ease, it is possible to find the action required by the project from the [referenced page](https://www.mediawiki.org/wiki/API:Search_and_discovery).
+
+```
+action=opensearch
+```
+
+> Returns search results in OpenSearch format, each with text extract on Wikimedia projects.
+
+With the newfound action, the [helpful dynamic guide](https://en.wikipedia.org/w/api.php) helps picking the properties the single purpose application needs.
+
+For [action=opensearch](https://en.wikipedia.org/w/api.php?action=help&modules=opensearch) several properties are available.
+
+- `search`: required parameter, representing literally the search string;
+
+- `limit`: the upper threshold of results to return;
+
+- `format`: format of the data.
+
+Important to note: Wikipedia is generous enough to provide a [sandbox](https://www.mediawiki.org/wiki/Special:ApiSandbox) in which it is possible to experiment with API requests. In here it is possible to test the selected action and properties and analyze the result obtained in response.
+
+**Objective URL**
+
+Wrapping all these considerations together, and experimenting in the sandbox itself, the objective URL for the specific case seems to be:
+
+```
+https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=example&limit=10
+```
+
+For a search query in which the following properties are specified:
+
+- search string of value "example";
+
+- limit of 10 results;
+
+- format in JSON.
+
+
+Such a search returns the following result:
+
+```
+["example",["Example","Examples of civil disobedience","Example (musician)","Examples of data mining","Examples of feudalism","Example discography","Examples of yellowface","Examples of vector spaces","Examples of differential equations","Examples of groups"],["Example may refer to:","The following are examples of civil disobedience from around the world.","Elliot John Gleave (born 20 June 1982), better known by his stage name Example, is an English rapper, singer, songwriter and record producer signed to Epic Records and Sony Music.","Data mining has been used in many applications. The following are some notable examples of usage:","Examples of feudalism are helpful to fully understand feudalism and feudal society. Feudalism was practiced in many different ways, depending on location and time period, thus a high-level encompassing conceptual definition does not always provide a reader with the intimate understanding that detailed historical examples provide.","The discography of Example, a British singer, consists of five studio albums, twenty singles and 25 music videos.","Examples of yellowface includes the portrayal of East Asians in American film and theater and other Western media.","This page lists some examples of vector spaces. See vector space for the definitions of terms used on this page.","Differential equations arise in many problems in physics, engineering, and other sciences. The following examples show how to solve differential equations in a few simple cases when an exact solution exists.","Some elementary examples of groups in mathematics are given on Group (mathematics). Further examples are listed here."],["https://en.wikipedia.org/wiki/Example","https://en.wikipedia.org/wiki/Examples_of_civil_disobedience","https://en.wikipedia.org/wiki/Example_(musician)","https://en.wikipedia.org/wiki/Examples_of_data_mining","https://en.wikipedia.org/wiki/Examples_of_feudalism","https://en.wikipedia.org/wiki/Example_discography","https://en.wikipedia.org/wiki/Examples_of_yellowface","https://en.wikipedia.org/wiki/Examples_of_vector_spaces","https://en.wikipedia.org/wiki/Examples_of_differential_equations","https://en.wikipedia.org/wiki/Examples_of_groups"]]
+```
+
+An object storing:
+
+1. the search string itself;
+
+2. an array of results matching the search string;
+
+3. an array containing a brief extract of the matching results;
+
+4. an array of links referencing the exact pages for the matching results on Wikipedia.
+
+**script.js**
+
+What is then required in the script of the single purpose application is to make use of the `getJSON` function, available through *jQuery*, to harness and make use of this data.
+
+A simple call to visualize the JSON object the API returns looks as follows:
+
+```js
+// declare function to display the JSON object from the objective URL
+function getData() {
+  var url = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=example&limit=10";
+  $.getJSON(url, function(json) {
+    console.log(json);
+  });
+}
+
+// call function, check result in the developer console
+getData();
+```
+
+Which simply returns: *Failed to load*. <!-- Cue sad trombone -->
+
+> No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access
+
+Rummaging in the Wikipedia API page, again in the helpful sub-menu on the right, it's possible to find a section on [Cross-site requests](https://www.mediawiki.org/wiki/API:Cross-site_requests) which seems to be fitting. In it the documentation states a requirement of any request made from external application:
+
+>  it must use JSONP or CORS
+
+The page itself provides a reference to the documentation on how to handle CORS requests, cross origin requests to bypass the error message mentioned earlier.
+
+In the description portion of the [page](https://www.mediawiki.org/wiki/Manual:CORS#Description), a possible solution is mentioned:
+
+> For anonymous requests, origin query string parameter can be set to * which will allow requests from anywhere.
+
+Adding the property of origin to the defined value seems to fix the error and allow to access the JSON object.
+
+```js
+function getData(searchString) {
+  var url = "https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&format=json&search=example&limit=10";
+  $.getJSON(url, function(json) {
+    console.log(json);
+  });
+}
+```
+
+The only difference is found in the objective URL, which now contains the following property: **origin=***
+
+In the developer console it is possible to analyze the returned object, containing the four expected items: <!-- cue happy trombone -->
+
+- search string;
+
+- array of matching results;
+
+- array of extracts;
+
+- array of URLs linking to Wikipedia entries.
+
+Which is exactly what the Wikipedia Viewer application requires for its own purpose.
+
+### Final thoughts
+
+What the page then needs is:
+
+1. modify the objective URL as to accept any string value found in the input element;
+
+2. retrieve the JSON object
+
+3. populate a list with a list item for each search result. List item detailing title, small extract and a link-able page.
+
+*In practice*
+
+- *Point one* is easy to achieve through jQuery itself.
+
+  **In the context of the input element**, whenever the search icon is clicked or *enter* is pressed on the keyboard, create an API request for the value found in the input element itself.
+
+  ```js
+  /*
+  declare a search function to retrieve a JSON object from the Wikipedia API.
+  ** accepting as parameter a search string
+  ** displaying the json object for this value
+  */
+
+  function getWikiSearchData(searchString) {
+    // include the searchString parameter through string concatenation
+    var url =
+        "https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&format=json&search="
+        + searchString
+        + "&limit=10";
+    // get json object for the objective URL
+    $.getJSON(url, function(json) {
+      console.log(json);
+    });
+  }
+
+  /*
+  listen for the click event on the search icon
+  AND
+  if the input element contains some text
+
+  call the getWikiSearchData for that value
+  AND
+  empty the input element
+  */
+  $("#search-icon").on("click", function() {
+    var inputValue = $("#search").val();
+    if(inputValue !== "") {
+      getWikiSearchData(inputValue);
+      // set value of the input element to an empty string
+      $("#search").val("");
+    }
+  });
+
+  /*
+  listen for the keydown event on the input element
+  AND
+  if the key pressed is enter (need to include a parameter for the event function)
+  AND
+  if the input element contains some text
+
+  call the getWikiSearchData for that value
+  AND
+  empty the input element
+  */
+  $("#search").on("keydown", function(event) {  
+    // store in a variable the key pressed on the keyboard  
+    var keyCode = event.keyCode;
+    // if said variable matches the values for 'enter',
+    // then check for the presence of text in the input
+    if(keyCode === 13) {
+      var inputValue = $("#search").val();
+      if(inputValue !== "") {
+        getWikiSearchData(inputValue);
+        // set value of the input element to an empty string
+        $("#search").val("");
+      }
+    }
+  });
+  ```
+
+  *Small note*: both events go through the same sequence. The code is to be improved by formatting said sequence in a reusable chunk of code, into functions that are called when the events occur. The rudimentary example helps in checking for the validity of the methods without much thought.
+
+- *Point two* has been the main focus of the discussion so far, and it is already incorporated in the previous code example.
+
+- *Point three* requires a change in visuals as the search box is substituted by the now-populated list.
+
+  jQuery allows to easily modify CSS properties through the appropriate function of `.css()`. Also to populate the list, jQuery allows to change the content of any and all HTML elements through dedicated functions.
+  
+  // TODO SUBSTITUTE SEARCH BOX WITH POPULATED LIST
+
+The marginal step that can be added is to finally style the list consistently with the rest of the page. Which is achieved through CSS itself.
+
