@@ -4,6 +4,8 @@
 
 If you care only about results, a live demo is currently being built on codepen at the following [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
 
+If you want the files, feel free to download this repository. Unlike the pen on codepen (TO BE UPDATED IN THE MORNING), this repo is up to date with the final changes.
+
 If you bother with the thought process behind the single page application, what follows may be of some marginal value. 
 
 ## The Task
