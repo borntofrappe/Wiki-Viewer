@@ -67,9 +67,6 @@ Indeed in trying to incorporate multiple niceties, to enhance both ease of use a
 
 The entirety of the CSS will be properly documented, including the nasty property of "border-image". Hopefully, the complexity introduced is understandable. 
 
-// TODO FINISH COMMENTING CSS
-
-
 ## Technical Implementation
 
 Besides the sections concocted in the design process, a fundamental component lays in the actual implementation of the Wikipedia API. It is indeed necessary to introduce new elements for the list of items that will be populated once a search string is passed through the input element and search results come pouring in.
@@ -317,11 +314,86 @@ What the page then needs is:
 
 - *Point two* has been the main focus of the discussion so far, and it is already incorporated in the previous code example.
 
-- *Point three* requires a change in visuals as the search box is substituted by the now-populated list.
+- *Point three* requires a change in visuals as the search box is substituted by the now-populated list of search results.
 
-  jQuery allows to easily modify CSS properties through the appropriate function of `.css()`. Also to populate the list, jQuery allows to change the content of any and all HTML elements through dedicated functions.
+  jQuery allows to easily modify CSS properties through the appropriate function of `.css()`. Also to populate the list, jQuery allows to change the content of any and all HTML elements through dedicated functions, such as `.append()`.
   
-  // TODO SUBSTITUTE SEARCH BOX WITH POPULATED LIST
+  A design choice is made to display the list of search results in the same exact place in which the search box is first presented. It is therefore possible to use the same container, while building a new HTML for the structure.
+  
+  The following HTML structure is concocted to experiment with the dynamics between the two visuals. The actual structure is not programmed in the HTML, but in the script file through jQuery, using the information retrieved from the API.
+  
+  - svg icon to allow visitors to go back to the search box and search again
+  
+  - unordered list containing one list item for each result returned by the API.
+  
+    The list items themselves are set to use flexbox to display the title and extract of the search result, one on top the other, and on the right side display a svg icon forwarding toward the specific Wikipedia page.
+    
+  As the HTML would be placed alongside the search box itself, CSS is used to set `display:none`. The structure is set to be faded in through jQuery, only when needed and only after the search box is faded out.
+  
+  This sequence is reversed when the visitor willingly goes back, from the search result to the search input.
+  
+  ```js
+  // when the user expresses the intention of finding results 
+  $(".search-icon-svg").on("click", function() {
+    // fade search box and show results as a callback function, once the fadeOut is over
+    $(".search-box").fadeOut("slow", showResults);
+  });
 
-The marginal step that can be added is to finally style the list consistently with the rest of the page. Which is achieved through CSS itself.
+  // fade in the previously hidden division
+  function showResults() {
+    $(".search-results").fadeIn("slow");
+  }
 
+  // when the user expresses the intention of searching again
+  // go in the opposite direction
+  $(".search-again-svg").on("click", function() {
+    $(".search-results").fadeOut("slow", showSearch);
+  });
+
+  function showSearch() {
+    $(".search-box").fadeIn("slow");
+  }
+  ```
+
+  **HTML structure in jQuery**: instead of showing a hard-coded structure from the HTML file, jQuery is used to inject the data from the Wikipedia API, directly in the document.
+  
+  From the objective URL, instead of simply displaying the JSON object, the items of the returned arrays are injected in list items.
+  
+    ```js
+    $.getJSON(url, function(json) {
+        // json[x] {where x is json[1], [2], [3]} provide arrays, of 1) matching results, 2) results' extracts 3) URLs for Wikipedia pages
+        // json[x][y] provide the specific values
+
+        // for the length of the array of results (2 results, twice)
+        for(var i=0; i < json[1].length; i++) {
+            // append a list item to the unordered list
+            $("ul").append(
+              "<li><div class='title-and-extract'><h1>" + json[1][i] + "</h1><h4>" + json[2][i].substring(0, 140) + "...</h4></div><a target='_blank' href=" + json[3][i] + "><svg height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z'/><path d='M0-.25h24v24H0z' fill='none'/></svg></a></li>"
+              );
+           }
+    });
+    ```  
+    
+    The structue appended in the unordered list is a tad hard to read, but not complex. Through string concatenation we appen list items with the following structure.
+    
+    ```html
+    <li>
+      <div class="title-and-extract">
+        <h1></h1>
+        <h4></h4>      
+      </div>
+      <a href="">
+        <svg></svg>
+      </a>
+    </li>
+    
+    ```
+    Where the header h1 contains the search result, the header h4 the brief extract and the anchor link has as a URL directing toward the respective Wikipedia page.
+    
+    **Important to note**: as the visitor may inquire for multiple searches, simply appending list items will soon compound past searches to an unsightly design. It is therefore advised to empty the unordered list, whenever the visitor asks for additional searches.
+    
+    ```js
+    $(".list-to-be-populated").empty();
+    ```
+    
+What is left is to wrap everything up and style with CSS consistenly with the rest of the page. See live example (TO BE UPDATED IN THE MORNING)
