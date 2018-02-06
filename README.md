@@ -2,9 +2,15 @@
 
 ## The End Result 
 
-If you care only about results, you might enjoy the live demo at this particular [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
+- If you care only about results, you might enjoy the live demo at this particular [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
 
-If you bother with the thought process behind the single page application, what follows may be of some marginal value to you. 
+- If you bother with the thought process behind the single page application, what follows may be of some marginal value to you. 
+
+- Used for this project:
+
+  - [jQuery](http://code.jquery.com/)
+  - Wikipedia [API](https://www.mediawiki.org/wiki/API:Main_page)
+  - svg illustrations from [unDraw](https://undraw.co/)
 
 ## The Task
 
