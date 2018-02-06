@@ -43,14 +43,7 @@
       - div to include an input and label (styled as to appear upon input:focus, on top of the search input itself)
       - svg referencing a search icon 24px by 24px by default
 
-    upon enacting the API request for the search on Wikipedia the contents of this container are to be made fade out
-    and in its stance a list populated with the search result is displayed
-    this unordered list uses flexbox, similarly to the content displayed by default
-
-    there should be an option to go back and forward between the two, between the search-box and the search-results
-
-    therefore, this is also the container for the search results section of the page
-    - div containing the unordered list
+    
   -->
   <div class="container search-container">
     <div class="search-box">
@@ -68,6 +61,16 @@
 
     </div>
 
+     <!--
+      upon enacting the API request for the search on Wikipedia the contents of this container are substituted
+      substituted by a list populated with the search result
+      this unordered list uses flexbox, similarly to the content displayed by default
+
+      therefore, this is also the container for the search results section of the page
+      - svg for the icon allowing the visitor to go back searching (substituting the search results for the search box)
+      - span providing a hint of text next to the svg (span is an inline element by default)
+      - div containing the unordered list, to be populated with jQuery through the .appen() method
+      -->
     <div class="search-results">
       <svg class="search-again-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
