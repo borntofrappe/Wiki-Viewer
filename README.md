@@ -2,11 +2,9 @@
 
 ## The End Result 
 
-If you care only about results, a live demo is currently being built on codepen at the following [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
+If you care only about results, you might enjoy the live demo at this particular [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
 
-If you want the files, feel free to download this repository. Unlike the pen on codepen (TO BE UPDATED IN THE MORNING), this repo is up to date with the final changes.
-
-If you bother with the thought process behind the single page application, what follows may be of some marginal value. 
+If you bother with the thought process behind the single page application, what follows may be of some marginal value to you. 
 
 ## The Task
 
@@ -398,4 +396,4 @@ What the page then needs is:
     $(".list-to-be-populated").empty();
     ```
     
-What is left is to wrap everything up and style with CSS consistenly with the rest of the page. See live example (TO BE UPDATED IN THE MORNING)
+What is left is to wrap everything up and style with CSS consistenly with the rest of the page.
