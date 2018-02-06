@@ -4,13 +4,24 @@
 
 - If you care only about results, you might enjoy the live demo at this particular [address](https://codepen.io/borntofrappe/full/PQNPwM/). 
 
-- If you bother with the thought process behind the single page application, what follows may be of some marginal value to you. 
+- If you bother with the thought process behind the single page application, you can find a semi-rational description in the aplty named section. 
 
 - Used for this project:
 
-  - [jQuery](http://code.jquery.com/)
-  - Wikipedia [API](https://www.mediawiki.org/wiki/API:Main_page)
-  - svg illustrations from [unDraw](https://undraw.co/)
+  - [jQuery](http://code.jquery.com/);
+  
+  - Wikipedia [API](https://www.mediawiki.org/wiki/API:Main_page);
+  
+  - svg illustrations from [unDraw](https://undraw.co/).
+
+- Feature request:
+
+  - alert user if the search icon is clicked AND no text is available in the input element, with the help of some visual;
+  
+  - if no result is available include some HTML detailing the lack of matches.
+
+
+# Building the Single Purpose Application
 
 ## The Task
 
