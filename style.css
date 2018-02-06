@@ -214,19 +214,35 @@ svg for the search icon, upon hover
   - increase scale and rotate icon (small effect)
 */
 .search-box .search-icon-svg:hover {
-  transform: scale(1.2) rotateZ(-20deg);
+  transform: scale(1.2) rotate(-20deg);
 }
 
 
+/*
+section for the search results
+  - display none to initially hide the element
+  - color to the predefined simil-white
+  - padding to distance the content from its border
+  - font family to the imported font
+  - width 100% to consider the entirety of the available viewport (parent container has width 100vw)
+*/
 
 .search-results {
   display: none;
   color: #aab3bc;
   padding: 0.5rem;
   font-family: 'Josefin Sans', sans-serif;
-  position: relative;
   width: 100%;
 }
+/*
+every list item which is populated with search result
+  - padding to distance the content from its border
+  - margin to distance list item from each other
+  - border and border-image properties to create the gradient border, just like for the search box, but this time 5px wide
+  - background color to a slightly opaque white
+  - display flex to make the list item a flex container
+  - align items to align the flex items in the cross axis, in the column (vertically)
+*/
 .search-results ul li {
   padding: 1rem;
   margin: 1rem;
@@ -241,37 +257,66 @@ svg for the search icon, upon hover
   background-color: rgba(255,255,255,0.15);
   display: flex;
   align-items: center;
-  justify-content: center;
 }
+/*
+headers inside the list items
+  - flex grow to expand the section to cover the available space (the svg icon right next to this division occupies only as much space as needed)
+  - display flex to make the division a flex container 
+  - flex direction to display the items nested in the division, vertically 
+  - margin to distance the headers from each other
+  - font size to slightly increase readibility
+*/
 .search-results ul li .title-and-description {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin: 0.4rem;
   font-size: 1.1rem;
 }
+/*
+svg icon for every search result (which forward toward wikipedia entries)
+  - fill to the predefined simil-white
+  - width and height to the size of a reasonable icon
+  - transition to change the svg icon upon hover
+*/
 .search-results ul li svg {
   fill: #aab3bc;
   width: 62px;
   height: 62px;
-  position: relative;
   transition: all 0.3s ease;
 }
+/*
+svg icon on hover
+  - rotate 360 degrees to its original location
+*/
 .search-results ul li svg:hover {
-  transform: rotateZ(-360deg);
+  transform: rotate(-360deg);
 }
+/*
+svg icon which leads the visitor back to the search box
+  - fill to the predefined simil-white
+  - cursor pointer to make it evidently clickable
+  - width and height to the size of a reasonably smaller icon
+  - transition to change the svg icon on hover
+*/
 .search-results .search-again-svg {
   fill: #aab3bc;
   cursor: pointer;
-  z-index: 1;
   width: 48px;
   height: 48px;
   transition: all 0.3s ease;
 }
+/*
+svg icon which leads the visitor back to the search box, on hover
+  - rotate toward the left, this time clockwise
+*/
 .search-results .search-again-svg:hover {
-  transform: rotateZ(180deg);
+  transform: rotate(180deg);
 }
+/*
+span located right next to the svg leading the visitor back to the search box
+  - increase font size a touch
+*/
 .search-results span {
   font-size: 1.25rem;
 }
@@ -313,7 +358,7 @@ svg image in the middle section, explaining the purpose behind the page
   height: calc(200px + 1vw);
   top: 1rem;
   right: 2rem;
-  transform: rotateZ(-20deg);
+  transform: rotate(-20deg);
   transition: all 0.3s ease-out;
 }
 /*
@@ -321,7 +366,7 @@ svg image upon hover
   - increase scale and rotate a bit
 */
 .purpose-container #svg_searching_documents:hover {
-  transform: scale(1.1) rotateZ(-10deg);
+  transform: scale(1.1) rotate(-10deg);
 }
 /*
 header in the container of the middle section
